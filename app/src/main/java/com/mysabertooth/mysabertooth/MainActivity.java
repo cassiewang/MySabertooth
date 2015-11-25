@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 
 import com.oralb.sdk.OBTBrush;
 import com.oralb.sdk.OBTSDK;
-
+import android.view.ViewGroup.LayoutParams;
 import java.util.List;
 
 
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
+        catView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
+        catView.getLayoutParams().width = LayoutParams.MATCH_PARENT;
 
         mainHelpDialog.setVisibility(View.GONE);
         fishButton.setOnClickListener(new View.OnClickListener() {

@@ -37,6 +37,7 @@ public class CatView extends SurfaceView implements Runnable {
     // How many frames are there on the sprite sheet?
     private int frameCount = 3;
 
+    private boolean forward = true;
 
     private Rect frameToDraw = new Rect(
             0,
@@ -96,11 +97,19 @@ public class CatView extends SurfaceView implements Runnable {
     }
 
     public void update() {
-        catXPosition = catXPosition + walkSpeedPerSecond;
-
-        if (catXPosition > frameCount * walkSpeedPerSecond) {
-            catXPosition = 0;
+        if (forward) {
+            catXPosition = catXPosition + walkSpeedPerSecond;
+        } else {
+            catXPosition = catXPosition - walkSpeedPerSecond;
         }
+
+        if (catXPosition > (frameCount - 1) * walkSpeedPerSecond) {
+            forward = false;
+        } else if (catXPosition <= 0) {
+            forward = true;
+        }
+
+
     }
 
     public void draw() {
