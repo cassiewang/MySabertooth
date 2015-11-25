@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Menu;
@@ -26,6 +27,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements OBTBrushListener {
 
@@ -39,6 +44,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public ImageView shopButton;
 
     public OBTBrush toothbrush;
+
+    public ToothbrushRunnable toothbrushRunnable;
+
+    ScheduledExecutorService executor;
+
+    ScheduledFuture future;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
                     if (OBTSDK.isBluetoothAvailableAndEnabled()) {
                         Log.d("checking Bluetooth", "found true");
-                        OBTSDK.startScanning();
+                        //OBTSDK.startScanning();
                     } else Log.d("checking Bluetooth", "found false");
                 }
 
@@ -67,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
                 }
             }
         );
+
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
@@ -96,16 +108,17 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         brushView = new BrushView(this);
         catHolder.addView(brushView);
 
-        catView.setOnClickListener(new View.OnClickListener() {
+
+        catView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                /*if (catView.isScared) {
-                    //brushView.pause();
-                    catView.gotSatisfied();
-                } else {
-                    //brushView.resume();
-                    catView.gotScared();
-                }*/
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    catView.resume();
+                } else if (action == MotionEvent.ACTION_UP) {
+                    catView.pause();
+                }
+                return false;
             }
         });
 
@@ -160,12 +173,27 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushDisconnected() {
-
+        future.cancel(false);
+        executor.shutdown();
     }
 
     @Override
     public void onBrushConnected() {
         Log.d("mysabertooth", "yas");
+        toothbrush = OBTSDK.getConnectedToothbrush();
+        Log.d("mysabertooth", "state "+toothbrush.getCurrentBrushState());
+        Log.d("mysabertooth", "pressure "+toothbrush.isHighPressure());
+        Log.d("mysabertooth", "id " + toothbrush.getHandleId());
+        OBTSDK.stopScanning();
+
+        executor = Executors.newSingleThreadScheduledExecutor();
+
+        future = executor.scheduleWithFixedDelay(new ToothbrushRunnable(toothbrush), 0, 500, TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -187,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushStateChanged(int i) {
-       // Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
+       Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
     }
 
     @Override
