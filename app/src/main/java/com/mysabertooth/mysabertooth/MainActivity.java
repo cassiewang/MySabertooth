@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
         final Context _self = this;
 
+        try {
+            OBTSDK.initialize(this);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         OBTSDK.authorizeSdk(new OBTSdkAuthorizationListener() {
                                 @Override
                                 public void onSdkAuthorizationSuccess() {
@@ -209,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         /*future.cancel(false);
         executor.shutdown();
 */
+        OBTSDK.startScanning();
         Data.fish = Data.fish + 10;
         fishButton.setText(Data.fish+"");
     }
@@ -218,11 +224,15 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         Log.d("mysabertooth", "yas");
         toothbrush = OBTSDK.getConnectedToothbrush();
         Log.d("mysabertooth", "state "+toothbrush.getCurrentBrushState());
-        Log.d("mysabertooth", "pressure "+toothbrush.isHighPressure());
+        Log.d("mysabertooth", "pressure " + toothbrush.isHighPressure());
         OBTSDK.stopScanning();
 
         executor = Executors.newSingleThreadScheduledExecutor();
         future = executor.scheduleWithFixedDelay(new ToothbrushRunnable(toothbrush, catView), 0, 500, TimeUnit.MILLISECONDS);
+        if (!catView.playing) {
+            catView.resume();
+        }
+
     }
 
     @Override

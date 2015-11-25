@@ -24,15 +24,7 @@ public class MySabertooth extends Application {
     public void onCreate() {
         super.onCreate();
 
-        try {
-            //Call to initialize the OBTSDK
-            OBTSDK.initialize(this);
-            Log.d("mysabertooth", "yoaa");
 
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

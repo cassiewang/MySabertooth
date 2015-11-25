@@ -79,8 +79,8 @@ public class CatView extends SurfaceView implements Runnable {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-               resume();
-                //draw();
+                //resume();
+                draw();
             }
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
