@@ -1,12 +1,18 @@
 package com.mysabertooth.mysabertooth;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Menu;
@@ -21,56 +27,72 @@ import com.oralb.sdk.OBTSDK;
 import com.oralb.sdk.OBTSdkAuthorizationListener;
 
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements OBTBrushListener {
 
-    public ImageView fishButton;
+    public TextView fishButton;
     public Button mainHelpDialogOk;
     public LinearLayout mainHelpDialog;
     public CatView catView;
     public BrushView brushView;
     public LinearLayout catHolder;
     public Button connect;
+    public ImageView shopButton;
+    private MediaPlayer mediaPlayer;
 
     public OBTBrush toothbrush;
+
+    public ToothbrushRunnable toothbrushRunnable;
+
+    ScheduledExecutorService executor;
+
+    ScheduledFuture future;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("mysabertooth", "authroize!");
+
+        final Context _self = this;
+
         OBTSDK.authorizeSdk(new OBTSdkAuthorizationListener() {
-                                @Override
-                                public void onSdkAuthorizationSuccess() {
-                                    Log.d("mysabertooth", "successs!");
+                @Override
+                public void onSdkAuthorizationSuccess() {
+                    Log.d("mysabertooth", "successs!");
 
-                                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
-                                        Log.d("checking Bluetooth", "found true");
-                                        OBTSDK.startScanning();
-                                    } else Log.d("checking Bluetooth", "found false");
-                                }
+                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
+                        Log.d("checking Bluetooth", "found true");
+                        //OBTSDK.startScanning();
+                    } else Log.d("checking Bluetooth", "found false");
+                }
 
-                                @Override
-                                public void onSdkAuthorizationFailed(int i) {
-                                    Log.d("mysabertooth", "failuree!");
-                                }
-                            }
+                @Override
+                public void onSdkAuthorizationFailed(int i) {
+                    Log.d("mysabertooth", "failuree!");
+                }
+            }
         );
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
-        fishButton = (ImageView) findViewById(R.id.btn_fish);
-        connect = (Button) findViewById(R.id.btn_connect);
+        fishButton = (TextView) findViewById(R.id.btn_fish);
+        shopButton = (ImageView) findViewById(R.id.btn_shop);
 
-        connect.setOnClickListener(new View.OnClickListener() {
+        shopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OBTSDK.startScanning();
+                Intent intent = new Intent(_self, ShopActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -81,16 +103,17 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         brushView = new BrushView(this);
         catHolder.addView(brushView);
 
-        catView.setOnClickListener(new View.OnClickListener() {
+
+        catView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (catView.isScared) {
-                    //brushView.pause();
-                    catView.gotSatisfied();
-                } else {
-                    //brushView.resume();
-                    catView.gotScared();
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    catView.resume();
+                } else if (action == MotionEvent.ACTION_UP) {
+                    catView.pause();
                 }
+                return false;
             }
         });
 
@@ -100,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.VISIBLE);
-
+                catView.setZOrderOnTop(false);
             }
         });
 
@@ -108,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.GONE);
+                catView.setZOrderOnTop(true);
             }
         });
     }
@@ -117,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         super.onResume();
         // Set this activity as OBTBrushListener
         OBTSDK.setOBTBrushListener(this);
+        mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+        //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
     }
 
     @Override
@@ -125,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         OBTSDK.stopScanning();
         // Remove the OBTBrushListener
         OBTSDK.setOBTBrushListener(null);
+        mediaPlayer.release();
     }
 
 
@@ -145,18 +174,34 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushDisconnected() {
-
+        future.cancel(false);
+        executor.shutdown();
     }
 
     @Override
     public void onBrushConnected() {
         Log.d("mysabertooth", "yas");
-        //toothbrush = OBTSDK.getPreferableToothbrush();
+        toothbrush = OBTSDK.getConnectedToothbrush();
+        Log.d("mysabertooth", "state "+toothbrush.getCurrentBrushState());
+        Log.d("mysabertooth", "pressure "+toothbrush.isHighPressure());
+        Log.d("mysabertooth", "id " + toothbrush.getHandleId());
+        OBTSDK.stopScanning();
+
+        executor = Executors.newSingleThreadScheduledExecutor();
+
+        future = executor.scheduleWithFixedDelay(new ToothbrushRunnable(toothbrush), 0, 500, TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void onBrushConnecting() {
         Log.d("mysabertooth", "connectinga");
+
     }
 
     @Override
@@ -171,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushStateChanged(int i) {
-        Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
+       Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
     }
 
     @Override
@@ -192,6 +237,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     @Override
     public void onHighPressureChanged(boolean b) {
         Log.d("mysabertooth", "pressure"+b);
+    }
+
+    @Override
+    public void onDestroy() {
+        mediaPlayer.stop();
+        super.onDestroy();
     }
 
 }
