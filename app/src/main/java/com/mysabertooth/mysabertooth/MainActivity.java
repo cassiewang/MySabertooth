@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     ScheduledFuture future;
 
-    int fish = 5;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,12 +108,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("fish", fish);
+                intent.putExtra("fish", Data.fish);
                 startActivity(intent);
             }
         });
 
-        fishButton.setText(fish + "");
+        fishButton.setText(Data.fish + "");
 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
@@ -171,12 +169,9 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
 
         Intent intent = getIntent();
-        itemsBought = intent.getIntExtra("items", 0);
-        Log.d("mysabertooth", "items bought "+itemsBought);
-        fish = intent.getIntExtra("fish", fish);
-        fishButton.setText(fish+"");
+        fishButton.setText(Data.fish+"");
 
-        for (int i = 0; i < itemsBought; i ++) {
+        for (int i = 0; i < Data.items; i ++) {
             ImageView heart = hearts.get(i);
             heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));
         }
@@ -214,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         future.cancel(false);
         executor.shutdown();
 
-        fish = fish + 10;
-        fishButton.setText(fish+"");
+        Data.fish = Data.fish + 10;
+        fishButton.setText(Data.fish+"");
     }
 
     @Override

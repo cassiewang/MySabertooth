@@ -63,9 +63,8 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                intent.putExtra("fish", fish);
-                intent.putExtra("items", items);
 
                 startActivity(intent);
             }
@@ -81,12 +80,12 @@ public class ShopActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            if (fish - price < 0) {
-                Toast toast = Toast.makeText(ShopActivity.this, String.format("You can\'t afford this item. You have %d sardines left", fish), Toast.LENGTH_LONG);
+            if (Data.fish - price < 0) {
+                Toast toast = Toast.makeText(ShopActivity.this, String.format("You can\'t afford this item. You have %d sardines left", Data.fish), Toast.LENGTH_LONG);
                 toast.show();
             } else {
-                fish = fish - price;
-                items++;
+                Data.fish = Data.fish - price;
+                Data.items++;
                 Toast toast = Toast.makeText(ShopActivity.this, String.format("Saber loves you!"), Toast.LENGTH_LONG);
                 toast.show();
             }
