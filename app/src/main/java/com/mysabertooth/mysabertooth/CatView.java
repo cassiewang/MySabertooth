@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -27,10 +29,10 @@ public class CatView extends SurfaceView implements Runnable {
     private long timeThisFrame;
     Bitmap bitmapCat;
     boolean isMoving = false;
-    float walkSpeedPerSecond = 512;
+    float walkSpeedPerSecond = 250;
     float catXPosition = 0;
-    private int frameWidth = 1000;
-    private int frameHeight = 1000;
+    private int frameWidth = 3000;
+    private int frameHeight = 3000;
 
     // How many frames are there on the sprite sheet?
     private int frameCount = 4;
@@ -57,8 +59,9 @@ public class CatView extends SurfaceView implements Runnable {
 
     public CatView(Context context) {
         super(context);
-
+        setZOrderOnTop(true);
         ourHolder = getHolder();
+        ourHolder.setFormat(PixelFormat.TRANSPARENT);
 
         ourHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -76,9 +79,8 @@ public class CatView extends SurfaceView implements Runnable {
 
         });
 
-        paint = new Paint();
 
-        bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_pet_8);
+        bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_8);
 
         playing = true;
         isMoving = true;
@@ -145,6 +147,7 @@ public class CatView extends SurfaceView implements Runnable {
                     frameHeight);
 
             //getCurrentFrame();
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             canvas.drawBitmap(bitmapCat,
                     frameToDraw,

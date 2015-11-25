@@ -40,8 +40,8 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="1000px"
+            android:layout_height="1000px"
             android:id="@+id/cat_holder">
 
         </LinearLayout>
