@@ -2,6 +2,7 @@ package com.mysabertooth.mysabertooth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     private MediaPlayer mediaPlayer;
     public LinearLayout heartsHolder;
     public ArrayList<ImageView> hearts;
+    public static final String PREFS_NAME = "FishFile";
 
     public OBTBrush toothbrush;
 
@@ -115,7 +117,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             }
         });
 
-        fishButton.setText(fish + "");
+
+        //Get number of fish
+        SharedPreferences fishpreferences = getSharedPreferences(PREFS_NAME, 0);
+        fish = fishpreferences.getInt("fish", 0);
+
+        fishButton.setText(fish+"");
 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
@@ -190,6 +197,14 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         // Remove the OBTBrushListener
         OBTSDK.setOBTBrushListener(null);
         mediaPlayer.release();
+
+        //savefish
+        SharedPreferences fishpreferences = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = fishpreferences.edit();
+        editor.putInt("fish", fish);
+
+        // Commit the edits!
+        editor.commit();
     }
 
 
