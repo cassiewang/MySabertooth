@@ -55,11 +55,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/help_dialog"
-        android:background="@drawable/paper_8"
+        android:background="@drawable/paper_24"
         android:weightSum="1"
-        android:paddingLeft="50dp"
-        android:paddingTop="50dp"
-        android:paddingRight="50dp"
+        android:paddingLeft="70dp"
+        android:paddingTop="100dp"
+        android:paddingRight="60dp"
         android:paddingBottom="50dp">
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="@string/main_instructions"
             android:id="@+id/help_dialog_text"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textIsSelectable="false" />
 
         <Button
