@@ -28,13 +28,16 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/shop_24"/>
 
-            <ImageView
+            <TextView
                 android:id="@+id/btn_fish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/fish_24"
+                android:drawableRight="@drawable/fish"
+                android:text="0"
+                android:textSize="100dp"
+                android:textAlignment="viewEnd"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
 
@@ -65,7 +68,8 @@
             android:layout_height="wrap_content"
             android:text="@string/main_instructions"
             android:id="@+id/help_dialog_text"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:textIsSelectable="false" />
 
         <Button
             android:layout_width="90dp"
@@ -75,11 +79,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.08" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Connect"
-            android:id="@+id/btn_connect"
-            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </FrameLayout>

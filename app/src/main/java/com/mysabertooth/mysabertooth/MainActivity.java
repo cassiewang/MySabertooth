@@ -3,6 +3,8 @@ package com.mysabertooth.mysabertooth;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +26,7 @@ import com.oralb.sdk.OBTSDK;
 import com.oralb.sdk.OBTSdkAuthorizationListener;
 
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements OBTBrushListener {
 
-    public ImageView fishButton;
+    public TextView fishButton;
     public Button mainHelpDialogOk;
     public LinearLayout mainHelpDialog;
     public CatView catView;
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Log.d("mysabertooth", "authroize!");
 
@@ -82,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
-        fishButton = (ImageView) findViewById(R.id.btn_fish);
-        connect = (Button) findViewById(R.id.btn_connect);
+        fishButton = (TextView) findViewById(R.id.btn_fish);
         shopButton = (ImageView) findViewById(R.id.btn_shop);
 
         shopButton.setOnClickListener(new View.OnClickListener() {
@@ -91,13 +92,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        connect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OBTSDK.startScanning();
             }
         });
 
@@ -128,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.VISIBLE);
-
+                catView.setZOrderOnTop(false);
             }
         });
 
@@ -136,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.GONE);
+                catView.setZOrderOnTop(true);
             }
         });
     }
