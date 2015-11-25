@@ -27,6 +27,9 @@ public class MySabertooth extends Application {
         try {
             //Call to initialize the OBTSDK
             OBTSDK.initialize(this);
+            Log.d("mysabertooth", "yoaa");
+
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

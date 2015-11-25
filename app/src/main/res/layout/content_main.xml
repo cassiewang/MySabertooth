@@ -65,7 +65,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:id="@+id/hearts_holder">
 
             <ImageView
@@ -73,31 +73,36 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/heart_gray_8"
                 android:id="@+id/heart_1"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:padding="50dp" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/heart_gray_8"
                 android:id="@+id/heart_2"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:padding="50dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/heart_gray_8"
                 android:id="@+id/heart_3"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:padding="50dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/heart_gray_8"
                 android:id="@+id/heart_4"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:padding="50dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/heart_gray_8"
                 android:id="@+id/heart_5"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:padding="50dp"/>
         </LinearLayout>
 
     </LinearLayout>

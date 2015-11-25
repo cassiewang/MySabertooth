@@ -206,9 +206,9 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     @Override
     public void onBrushDisconnected() {
         Log.d("mysabertooth", "disconnected");
-        future.cancel(false);
+        /*future.cancel(false);
         executor.shutdown();
-
+*/
         Data.fish = Data.fish + 10;
         fishButton.setText(Data.fish+"");
     }
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onHighPressureChanged(boolean b) {
-        Log.d("mysabertooth", "pressure"+b);
+        Log.d("mysabertooth", String.format("pressure changed %b", b));
     }
 
     @Override
