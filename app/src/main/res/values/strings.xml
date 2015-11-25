@@ -12,6 +12,7 @@
     <string name="shop_mousey">mousey</string>
     <string name="buy">buy</string>
     <string name="shop_cost_1">1x</string>
+    <string name="shop_cost_2">2x</string>
     <string name="shop_cost_3">3x</string>
     <string name="shop_cost_5">5x</string>
 </resources>
