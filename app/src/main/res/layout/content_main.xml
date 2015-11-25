@@ -1,34 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mysabertooth.mysabertooth.MainActivity"
-    tools:showIn="@layout/activity_main"
-    android:background="@drawable/background">
+    tools:showIn="@layout/activity_main">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_shop"
+                android:layout_weight="1"
+                android:text="Shop" />
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_fish"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="27"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="match_parent"
+        android:id="@+id/help_dialog"
+        android:background="@drawable/paper"
+        android:weightSum="1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        android:paddingLeft="50dp"
+        android:paddingTop="50dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_instructions"
+            android:id="@+id/help_dialog_text"
+            android:textSize="30dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/btn_shop"
-            android:layout_weight="1"
-            android:text="Shop" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/btn_fish"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:text="27"/>
-
+            android:layout_width="90dp"
+            android:layout_height="42dp"
+            android:background="@drawable/ok"
+            android:id="@+id/btn_fish_dialog_ok"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.08" />
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>
