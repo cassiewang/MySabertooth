@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     int fish = 5;
 
-    Bitmap heartFilledBitmap;
-    Bitmap heartEmptyBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //Initialize the Typeface
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
         ((TextView) findViewById(R.id.help_dialog_text)).setTypeface(typeface);
-        
+
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (TextView) findViewById(R.id.btn_fish);
@@ -110,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
                 intent.putExtra("fish", fish);
                 startActivity(intent);
             }
@@ -120,9 +120,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
-
-        heartFilledBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_gray_8);
-        heartEmptyBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_red_8);
 
         hearts = new ArrayList<ImageView>();
         hearts.add((ImageView) findViewById(R.id.heart_1));
@@ -175,7 +172,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
         Intent intent = getIntent();
         int itemsBought = intent.getIntExtra("items", 0);
-
+        fish = intent.getIntExtra("fish", fish);
+        fishButton.setText(fish+"");
         for (int i = 0; i < itemsBought; i ++) {
             ImageView heart = hearts.get(i);
             heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));
