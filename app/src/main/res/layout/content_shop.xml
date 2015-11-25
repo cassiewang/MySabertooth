@@ -14,8 +14,8 @@
     tools:showIn="@layout/activity_shop"
     android:background="@drawable/shop_background">
 
-    <ImageView
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="200px"
         android:id="@+id/btn_back"
         android:background="@drawable/arrow"
@@ -61,7 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/shop_cost_1"
+                            android:text="@string/shop_cost_2"
                             android:id="@+id/textView2" />
 
                         <ImageView
