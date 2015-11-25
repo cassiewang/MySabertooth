@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //Initialize the Typeface
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
         ((TextView) findViewById(R.id.help_dialog_text)).setTypeface(typeface);
-
+        
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (TextView) findViewById(R.id.btn_fish);

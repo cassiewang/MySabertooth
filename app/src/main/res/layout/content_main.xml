@@ -16,9 +16,9 @@
         >
 
         <RelativeLayout
+            android:id="@+id/topBackground"
             android:layout_width="match_parent"
             android:layout_height="500px">
-
 
             <ImageView
                 android:id="@+id/btn_shop"
@@ -28,16 +28,30 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/shop_24"/>
 
-            <TextView
-                android:id="@+id/btn_fish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:drawableRight="@drawable/fish"
-                android:textSize="100dp"
-                android:textAlignment="viewEnd"
-                android:layout_alignParentRight="true"/>
+            <RelativeLayout
+                android:id="@+id/fish_section_right"
+                android:layout_width="450px"
+                android:layout_height="500px"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true">
+
+                <RelativeLayout
+                    android:id="@+id/fish_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/fish_24">
+                </RelativeLayout>`
+
+                <TextView
+                    android:id="@+id/btn_fish"
+                    android:layout_width="match_parent"
+                    android:layout_height="250px"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:textSize="45sp"
+                    android:textAlignment="center"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
         </RelativeLayout>
 
         <LinearLayout
