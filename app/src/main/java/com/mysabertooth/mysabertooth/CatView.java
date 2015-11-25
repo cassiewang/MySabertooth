@@ -10,9 +10,12 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.media.AudioManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.media.SoundPool;
+import android.media.AudioAttributes;
 
 /**
  * Created by cassiewang on 11/25/15.
@@ -34,6 +37,12 @@ public class CatView extends SurfaceView implements Runnable {
     float catXPosition = 0;
     private int frameWidth = 1000;
     private int frameHeight = 1000;
+
+    //To play cat sounds
+    SoundPool sp;
+    int catMeow;
+    int catPurr;
+
 
     // How many frames are there on the sprite sheet?
     private int frameCount = 3;
@@ -60,7 +69,7 @@ public class CatView extends SurfaceView implements Runnable {
         ourHolder.setFormat(PixelFormat.TRANSPARENT);
 
         final CatView _self = this;
-
+        initializeSoundPool(context);
         ourHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
@@ -92,13 +101,41 @@ public class CatView extends SurfaceView implements Runnable {
             long startFrameTime = System.currentTimeMillis();
             update();
             draw();
-
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    private void initializeSoundPool(Context context) {
+        if((android.os.Build.VERSION.SDK_INT) == 21){
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+            sp = new SoundPool.Builder()
+                    .setMaxStreams(2)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+            catMeow = sp.load(context, R.raw.cat_meow, 1);
+            catPurr = sp.load(context, R.raw.cat_purr, 1);
+        }
+        else{
+            sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+            catMeow = sp.load(context, R.raw.cat_meow, 1);
+            catPurr = sp.load(context, R.raw.cat_purr, 1);
+        }
+    }
+
+    public void meow() {
+        sp.play (catMeow, 0.9f, 0.9f, 1, 0, 1);
+    }
+
+    public void purr() {
+        sp.play (catPurr, 0.9f, 0.9f, 1, 0, 1);
     }
 
     public void update() {
@@ -132,8 +169,10 @@ public class CatView extends SurfaceView implements Runnable {
 
             if (isScared) {
                 toDraw = scaredCat;
+                meow();
             } else {
                 toDraw = bitmapCat;
+                purr();
             }
 
             canvas.drawBitmap(toDraw,
@@ -142,6 +181,7 @@ public class CatView extends SurfaceView implements Runnable {
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
+
     }
 
 

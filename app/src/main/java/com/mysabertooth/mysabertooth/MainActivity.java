@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public LinearLayout catHolder;
     public Button connect;
     public ImageView shopButton;
+    private MediaPlayer mediaPlayer;
 
     public OBTBrush toothbrush;
 
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
                 }
             }
         );
-
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
@@ -140,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         super.onResume();
         // Set this activity as OBTBrushListener
         OBTSDK.setOBTBrushListener(this);
+        mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+        //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
     }
 
     @Override
@@ -148,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         OBTSDK.stopScanning();
         // Remove the OBTBrushListener
         OBTSDK.setOBTBrushListener(null);
+        mediaPlayer.release();
     }
 
 
@@ -231,6 +237,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     @Override
     public void onHighPressureChanged(boolean b) {
         Log.d("mysabertooth", "pressure"+b);
+    }
+
+    @Override
+    public void onDestroy() {
+        mediaPlayer.stop();
+        super.onDestroy();
     }
 
 }
