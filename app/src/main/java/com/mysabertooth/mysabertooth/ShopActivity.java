@@ -14,6 +14,8 @@ public class ShopActivity extends AppCompatActivity {
     Intent intent;
     int fish;
 
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

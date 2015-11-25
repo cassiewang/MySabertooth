@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.GONE);
-                //catView.setZOrderOnTop(true);
                 catView.setVisibility(View.VISIBLE);
             }
         });
