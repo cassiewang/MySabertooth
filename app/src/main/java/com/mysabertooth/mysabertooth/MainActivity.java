@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         catView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (catView.playing) {
-                    brushView.pause();
-                    catView.pause();
+                if (catView.isScared) {
+                    //brushView.pause();
+                    catView.gotSatisfied();
                 } else {
-                    brushView.resume();
-                    catView.resume();
+                    //brushView.resume();
+                    catView.gotScared();
                 }
             }
         });
