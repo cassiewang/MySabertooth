@@ -15,13 +15,13 @@
     android:background="@drawable/shop_background">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="200px"
+        android:layout_width="100dp"
+        android:layout_height="140dp"
         android:id="@+id/btn_back"
         android:background="@drawable/arrow"
         />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -32,16 +32,16 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_height="210dp"
+                android:gravity="center">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:id="@+id/shop_catnip"
                         android:background="@drawable/catnip"/>
 
@@ -65,27 +65,30 @@
                             android:id="@+id/catnip_cost_textView" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
                             android:background="@drawable/fish"
-                            android:id="@+id/imageView" />
+                            android:id="@+id/imageView"
+                            android:layout_marginBottom="5dp"/>
                     </LinearLayout>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/buy"
                         android:id="@+id/shop_catnip_buy" />
 
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"></LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:id="@+id/shop_chicken"
                         android:background="@drawable/chicken"/>
 
@@ -109,15 +112,16 @@
                             android:id="@+id/chicken_cost_textView" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
                             android:background="@drawable/fish"
-                            android:id="@+id/shop_chicken_currency" />
+                            android:id="@+id/shop_chicken_currency"
+                            android:layout_marginBottom="5dp"/>
                     </LinearLayout>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/buy"
                         android:id="@+id/shop_chicken_buy" />
 
@@ -131,15 +135,15 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:gravity="center">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:id="@+id/shop_biscuit"
                         android:background="@drawable/biscuit"/>
 
@@ -163,27 +167,30 @@
                             android:id="@+id/biscuit_cost_textView" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
                             android:background="@drawable/fish"
-                            android:id="@+id/shop_biscuit_currency" />
+                            android:id="@+id/shop_biscuit_currency"
+                            android:layout_marginBottom="5dp"/>
                     </LinearLayout>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/buy"
                         android:id="@+id/shop_biscuit_buy" />
 
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"></LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:id="@+id/shop_mousey"
                         android:background="@drawable/mouse"/>
 
@@ -207,15 +214,16 @@
                             android:id="@+id/mousey_cost_textView" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
                             android:background="@drawable/fish"
-                            android:id="@+id/shop_mousey_currency" />
+                            android:id="@+id/shop_mousey_currency"
+                            android:layout_marginBottom="5dp"/>
                     </LinearLayout>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/buy"
                         android:id="@+id/shop_mousey_buy" />
 
@@ -224,6 +232,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>
