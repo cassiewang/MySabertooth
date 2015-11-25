@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public LinearLayout heartsHolder;
     public ArrayList<ImageView> hearts;
 
+    public int itemsBought;
     public OBTBrush toothbrush;
 
     public ToothbrushRunnable toothbrushRunnable;
@@ -109,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                 intent.putExtra("fish", fish);
                 startActivity(intent);
             }
@@ -171,9 +171,11 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
 
         Intent intent = getIntent();
-        int itemsBought = intent.getIntExtra("items", 0);
+        itemsBought = intent.getIntExtra("items", 0);
+        Log.d("mysabertooth", "items bought "+itemsBought);
         fish = intent.getIntExtra("fish", fish);
         fishButton.setText(fish+"");
+
         for (int i = 0; i < itemsBought; i ++) {
             ImageView heart = hearts.get(i);
             heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));

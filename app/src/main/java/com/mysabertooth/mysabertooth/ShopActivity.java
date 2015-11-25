@@ -53,6 +53,7 @@ public class ShopActivity extends AppCompatActivity {
 
                 intent.putExtra("fish", fish);
                 intent.putExtra("items", items);
+
                 startActivity(intent);
             }
         });
