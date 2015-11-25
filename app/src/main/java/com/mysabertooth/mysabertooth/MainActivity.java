@@ -183,7 +183,11 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         Intent intent = getIntent();
         fishButton.setText(Data.fish+"");
 
-        for (int i = 0; i < Data.items; i ++) {
+        int itemLength = Data.items;
+        if (itemLength > 5) {
+            itemLength = 5;
+        }
+        for (int i = 0; i < itemLength; i ++) {
             ImageView heart = hearts.get(i);
             heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));
         }

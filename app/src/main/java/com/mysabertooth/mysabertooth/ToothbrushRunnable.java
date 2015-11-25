@@ -16,6 +16,7 @@ public class ToothbrushRunnable implements Runnable {
 
     public ToothbrushRunnable(OBTBrush toothbrush, CatView catView) {
         this.toothbrush = toothbrush;
+        this.catView = catView;
     }
 
     @Override
