@@ -28,6 +28,7 @@ public class CatView extends SurfaceView implements Runnable {
     long fps;
     private long timeThisFrame;
     Bitmap bitmapCat;
+    Bitmap scaredCat;
     boolean isMoving = false;
     float walkSpeedPerSecond = 1024;
     float catXPosition = 0;
@@ -49,6 +50,8 @@ public class CatView extends SurfaceView implements Runnable {
             0, 0,
             frameWidth,
             frameHeight);
+
+    public boolean isScared = false;
 
     public CatView(Context context) {
         super(context);
@@ -76,6 +79,7 @@ public class CatView extends SurfaceView implements Runnable {
         });
 
         bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_24);
+        scaredCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_scared_24);
 
 
     }
@@ -124,7 +128,15 @@ public class CatView extends SurfaceView implements Runnable {
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            canvas.drawBitmap(bitmapCat,
+            Bitmap toDraw;
+
+            if (isScared) {
+                toDraw = scaredCat;
+            } else {
+                toDraw = bitmapCat;
+            }
+
+            canvas.drawBitmap(toDraw,
                     frameToDraw,
                     whereToDraw, null);
 
@@ -145,11 +157,17 @@ public class CatView extends SurfaceView implements Runnable {
 
     }
 
-    // If SimpleGameEngine Activity is started theb
-    // start our thread.
     public void resume() {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void gotScared() {
+        isScared = true;
+    }
+
+    public void gotSatisfied() {
+        isScared = false;
     }
 }
