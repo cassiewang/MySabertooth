@@ -44,22 +44,24 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Log.d("mysabertooth", "authroize!");
         OBTSDK.authorizeSdk(new OBTSdkAuthorizationListener() {
-                                @Override
-                                public void onSdkAuthorizationSuccess() {
-                                    Log.d("mysabertooth", "successs!");
+                @Override
+                public void onSdkAuthorizationSuccess() {
+                    Log.d("mysabertooth", "successs!");
 
-                                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
-                                        Log.d("checking Bluetooth", "found true");
-                                        OBTSDK.startScanning();
-                                    } else Log.d("checking Bluetooth", "found false");
-                                }
+                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
+                        Log.d("checking Bluetooth", "found true");
+                        OBTSDK.startScanning();
+                    } else Log.d("checking Bluetooth", "found false");
+                }
 
-                                @Override
-                                public void onSdkAuthorizationFailed(int i) {
-                                    Log.d("mysabertooth", "failuree!");
-                                }
-                            }
+                @Override
+                public void onSdkAuthorizationFailed(int i) {
+                    Log.d("mysabertooth", "failuree!");
+                }
+            }
         );
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
@@ -84,13 +86,13 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         catView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (catView.isScared) {
+                /*if (catView.isScared) {
                     //brushView.pause();
                     catView.gotSatisfied();
                 } else {
                     //brushView.resume();
                     catView.gotScared();
-                }
+                }*/
             }
         });
 
@@ -151,12 +153,13 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     @Override
     public void onBrushConnected() {
         Log.d("mysabertooth", "yas");
-        //toothbrush = OBTSDK.getPreferableToothbrush();
+
     }
 
     @Override
     public void onBrushConnecting() {
         Log.d("mysabertooth", "connectinga");
+
     }
 
     @Override
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushStateChanged(int i) {
-        Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
+       // Log.d("mysabertooth", "meron state %d".format(String.valueOf(i)));
     }
 
     @Override
