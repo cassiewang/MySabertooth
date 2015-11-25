@@ -29,22 +29,14 @@ public class CatView extends SurfaceView implements Runnable {
     private long timeThisFrame;
     Bitmap bitmapCat;
     boolean isMoving = false;
-    float walkSpeedPerSecond = 250;
+    float walkSpeedPerSecond = 1030;
     float catXPosition = 0;
-    private int frameWidth = 3000;
-    private int frameHeight = 3000;
+    private int frameWidth = 1000;
+    private int frameHeight = 1000;
 
     // How many frames are there on the sprite sheet?
-    private int frameCount = 4;
+    private int frameCount = 3;
 
-    // Start at the first frame - where else?
-    private int currentFrame = 0;
-
-    // What time was it when we last changed frames
-    private long lastFrameChangeTime = 0;
-
-    // How long should each frame last
-    private int frameLengthInMilliseconds = 100;
 
     private Rect frameToDraw = new Rect(
             0,
@@ -53,8 +45,8 @@ public class CatView extends SurfaceView implements Runnable {
             frameHeight);
 
     RectF whereToDraw = new RectF(
-            catXPosition,                0,
-            catXPosition + frameWidth,
+            0, 0,
+            frameWidth,
             frameHeight);
 
     public CatView(Context context) {
@@ -62,6 +54,8 @@ public class CatView extends SurfaceView implements Runnable {
         setZOrderOnTop(true);
         ourHolder = getHolder();
         ourHolder.setFormat(PixelFormat.TRANSPARENT);
+
+        final CatView _self = this;
 
         ourHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -71,105 +65,80 @@ public class CatView extends SurfaceView implements Runnable {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                //start render thread here
-                draw();
+               resume();
             }
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
         });
 
-
         bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_8);
 
         playing = true;
-        isMoving = true;
-        System.out.println("Dat");
-        //update();
-        //draw();
-        //gameThread = new Thread(this);
-        //gameThread.start();
+
     }
 
 
     @Override
     public void run() {
         while (playing) {
-            System.out.println("Cate"+playing);
+            System.out.println("Cate" + playing);
             long startFrameTime = System.currentTimeMillis();
             update();
             draw();
 
-            timeThisFrame = System.currentTimeMillis() - startFrameTime;
-            if (timeThisFrame >= 1) {
-                fps = 1000 / timeThisFrame;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
     public void update() {
-        if(isMoving){
-            catXPosition = catXPosition + (walkSpeedPerSecond / fps);
-           Log.d("cat", "moving" + catXPosition);
+        catXPosition = catXPosition + walkSpeedPerSecond;
+
+        if (catXPosition > frameCount * walkSpeedPerSecond) {
+            catXPosition = 0;
         }
-    }
-
-    public void getCurrentFrame(){
-
-        long time = System.currentTimeMillis();
-        if(isMoving) {
-            if ( time > lastFrameChangeTime + frameLengthInMilliseconds) {
-                lastFrameChangeTime = time;
-                currentFrame++;
-                if (currentFrame >= frameCount) {
-
-                    currentFrame = 0;
-                }
-            }
-        }
-        frameToDraw.left = currentFrame * frameWidth;
-        frameToDraw.right = frameToDraw.left + frameWidth;
     }
 
     public void draw() {
-        System.out.println("DRAW "+ourHolder.getSurface().isValid());
+        System.out.println("DRAW "+catXPosition);
         if (ourHolder.getSurface().isValid()) {
             canvas = ourHolder.lockCanvas();
 
-            /*whereToDraw.set((int)catXPosition,
+            frameToDraw.set((int) catXPosition,
                     0,
-                    (int)catXPosition + frameWidth,
-                    frameHeight);*/
-
-            whereToDraw.set((int)catXPosition,
-                    0,
-                    (int)catXPosition + frameWidth,
+                    (int) catXPosition + frameWidth,
                     frameHeight);
 
-            //getCurrentFrame();
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             canvas.drawBitmap(bitmapCat,
                     frameToDraw,
                     whereToDraw, null);
 
-            Log.d("draw", "drew"+bitmapCat);
             ourHolder.unlockCanvasAndPost(canvas);
         }
     }
 
-    /*public void pause() {
+
+    public void pause() {
         playing = false;
         try {
             gameThread.join();
         } catch (InterruptedException e) {
             Log.e("Error:", "joining thread");
         }
+
     }
 
+    // If SimpleGameEngine Activity is started theb
+    // start our thread.
     public void resume() {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
-    }*/
+    }
 }
