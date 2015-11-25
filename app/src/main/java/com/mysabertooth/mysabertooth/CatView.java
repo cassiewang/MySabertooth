@@ -79,8 +79,8 @@ public class CatView extends SurfaceView implements Runnable {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-               //resume();
-                draw();
+               resume();
+                //draw();
             }
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
@@ -169,10 +169,10 @@ public class CatView extends SurfaceView implements Runnable {
 
             if (isScared) {
                 toDraw = scaredCat;
-                meow();
+                //meow();
             } else {
                 toDraw = bitmapCat;
-                purr();
+                //purr();
             }
 
             canvas.drawBitmap(toDraw,
@@ -187,14 +187,11 @@ public class CatView extends SurfaceView implements Runnable {
 
     public void pause() {
         playing = false;
-        if (gameThread != null) {
-            try {
-                gameThread.join();
-            } catch (InterruptedException e) {
-                Log.e("Error:", "joining thread");
-            }
+        try {
+            gameThread.join();
+        } catch (InterruptedException e) {
+            Log.e("Error:", "joining thread");
         }
-
     }
 
     public void resume() {

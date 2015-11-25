@@ -35,7 +35,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:drawableRight="@drawable/fish"
-                android:text="0"
                 android:textSize="100dp"
                 android:textAlignment="viewEnd"
                 android:layout_alignParentRight="true"/>

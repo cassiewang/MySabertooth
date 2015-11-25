@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     ScheduledFuture future;
 
+    int fish = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
                     if (OBTSDK.isBluetoothAvailableAndEnabled()) {
                         Log.d("checking Bluetooth", "found true");
-                        //OBTSDK.startScanning();
+                        OBTSDK.startScanning();
                     } else Log.d("checking Bluetooth", "found false");
                 }
 
@@ -92,28 +94,27 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
+                intent.putExtra("fish", fish);
                 startActivity(intent);
             }
         });
+
+        fishButton.setText(fish+"");
 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
 
-        brushView = new BrushView(this);
-        catHolder.addView(brushView);
-
-
-        catView.setOnTouchListener(new View.OnTouchListener() {
+        catView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                if (action == MotionEvent.ACTION_DOWN) {
-                    catView.resume();
-                } else if (action == MotionEvent.ACTION_UP) {
-                    catView.pause();
+            public void onClick(View v) {
+                if (catView.isScared) {
+                    catView.purr();
+                    catView.gotSatisfied();
+                } else {
+                    catView.gotScared();
+                    catView.meow();
                 }
-                return false;
             }
         });
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.VISIBLE);
-                catView.setZOrderOnTop(false);
+                catView.setVisibility(View.GONE);
             }
         });
 
@@ -131,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 mainHelpDialog.setVisibility(View.GONE);
-                catView.setZOrderOnTop(true);
+                //catView.setZOrderOnTop(true);
+                catView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -174,8 +176,12 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     @Override
     public void onBrushDisconnected() {
+        Log.d("mysabertooth", "disconnected");
         future.cancel(false);
         executor.shutdown();
+
+        fish = fish + 10;
+        fishButton.setText(fish+"");
     }
 
     @Override
@@ -184,18 +190,10 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         toothbrush = OBTSDK.getConnectedToothbrush();
         Log.d("mysabertooth", "state "+toothbrush.getCurrentBrushState());
         Log.d("mysabertooth", "pressure "+toothbrush.isHighPressure());
-        Log.d("mysabertooth", "id " + toothbrush.getHandleId());
         OBTSDK.stopScanning();
 
         executor = Executors.newSingleThreadScheduledExecutor();
-
-        future = executor.scheduleWithFixedDelay(new ToothbrushRunnable(toothbrush), 0, 500, TimeUnit.MILLISECONDS);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        future = executor.scheduleWithFixedDelay(new ToothbrushRunnable(toothbrush, catView), 0, 500, TimeUnit.MILLISECONDS);
     }
 
     @Override

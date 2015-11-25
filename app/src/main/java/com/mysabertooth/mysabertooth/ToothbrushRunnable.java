@@ -9,10 +9,11 @@ import com.oralb.sdk.OBTBrush;
  */
 public class ToothbrushRunnable implements Runnable {
     public OBTBrush toothbrush;
+    public CatView catView;
 
     int count = 1;
 
-    public ToothbrushRunnable(OBTBrush toothbrush) {
+    public ToothbrushRunnable(OBTBrush toothbrush, CatView catView) {
         this.toothbrush = toothbrush;
     }
 
@@ -20,8 +21,16 @@ public class ToothbrushRunnable implements Runnable {
     public void run() {
         Log.d("mysabertooth", "state polling"+toothbrush.getCurrentBrushState());
         Log.d("mysabertooth", "pressure polling"+toothbrush.isHighPressure());
-        Log.d("mysabertooth", "count "+count);
+        Log.d("mysabertooth", "count " + count);
         count++;
+
+        if (toothbrush.isHighPressure()) {
+            catView.gotScared();
+            catView.meow();
+        } else {
+            catView.gotScared();
+            catView.meow();
+        }
     }
 
 }
