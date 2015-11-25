@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             }
         });
 
+
         mainHelpDialog.setVisibility(View.GONE);
 
         fishButton.setOnClickListener(new View.OnClickListener() {
@@ -230,20 +231,17 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     @Override
     public void onBrushDisconnected() {
         Log.d("mysabertooth", "disconnected");
-        /*future.cancel(false);
+        future.cancel(false);
         executor.shutdown();
-*/
         OBTSDK.startScanning();
         Data.fish = Data.fish + 10;
         fishButton.setText(Data.fish+"");
+        catView.pause();
     }
 
     @Override
     public void onBrushConnected() {
-        Log.d("mysabertooth", "yas");
         toothbrush = OBTSDK.getConnectedToothbrush();
-        Log.d("mysabertooth", "state "+toothbrush.getCurrentBrushState());
-        Log.d("mysabertooth", "pressure " + toothbrush.isHighPressure());
         OBTSDK.stopScanning();
 
         executor = Executors.newSingleThreadScheduledExecutor();

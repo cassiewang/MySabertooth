@@ -21,16 +21,19 @@ public class ToothbrushRunnable implements Runnable {
 
     @Override
     public void run() {
-        count++;
         boolean pressured = toothbrush.isHighPressure();
         Log.d("mysabertooth", "pressure polling"+toothbrush.isHighPressure());
 
         if (pressured) {
-            catView.gotScared();
-            catView.meow();
+            if (!catView.isScared) {
+                catView.gotScared();
+                catView.meow();
+            }
         } else {
-            catView.gotSatisfied();
-            catView.purr();
+            if (catView.isScared) {
+                catView.gotSatisfied();
+                catView.purr();
+            }
         }
     }
 

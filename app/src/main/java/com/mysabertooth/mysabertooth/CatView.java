@@ -97,7 +97,6 @@ public class CatView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (playing) {
-            System.out.println("Cate" + playing);
             long startFrameTime = System.currentTimeMillis();
             update();
             draw();
