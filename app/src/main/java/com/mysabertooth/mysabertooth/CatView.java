@@ -151,7 +151,6 @@ public class CatView extends SurfaceView implements Runnable {
             forward = true;
         }
 
-
     }
 
     public void draw() {
