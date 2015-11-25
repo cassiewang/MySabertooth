@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public Button mainHelpDialogOk;
     public LinearLayout mainHelpDialog;
     public CatView catView;
+    public BrushView brushView;
     public LinearLayout catHolder;
 
     @Override
@@ -48,8 +49,22 @@ public class MainActivity extends AppCompatActivity {
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
-        catView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
-        catView.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+
+        brushView = new BrushView(this);
+        catHolder.addView(brushView);
+
+        catView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (catView.playing) {
+                    brushView.pause();
+                    catView.pause();
+                } else {
+                    brushView.resume();
+                    catView.resume();
+                }
+            }
+        });
 
         mainHelpDialog.setVisibility(View.GONE);
         fishButton.setOnClickListener(new View.OnClickListener() {

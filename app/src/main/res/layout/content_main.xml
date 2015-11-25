@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/cat_holder"
             android:layout_weight="3">
-
         </LinearLayout>
 
     </LinearLayout>
