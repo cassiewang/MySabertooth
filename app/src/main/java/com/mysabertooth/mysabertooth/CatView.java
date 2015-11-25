@@ -185,11 +185,14 @@ public class CatView extends SurfaceView implements Runnable {
 
     public void pause() {
         playing = false;
-        try {
-            gameThread.join();
-        } catch (InterruptedException e) {
-            Log.e("Error:", "joining thread");
+        if (gameThread != null) {
+            try {
+                gameThread.join();
+            } catch (InterruptedException e) {
+                Log.e("Error:", "joining thread");
+            }
         }
+
     }
 
     public void resume() {
