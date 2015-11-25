@@ -10,12 +10,14 @@
     tools:showIn="@layout/activity_main">
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:background="@drawable/background"
+        android:padding="10dp"
+        android:orientation="vertical"
+        >
 
         <RelativeLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="500px">
 
 
             <ImageView
@@ -24,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/shop"/>
+                android:src="@drawable/shop_24"/>
 
             <ImageView
                 android:id="@+id/btn_fish"
@@ -32,22 +34,27 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/fish"
+                android:src="@drawable/fish_24"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="1000px"
+            android:layout_height="1000px"
+            android:id="@+id/cat_holder">
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/help_dialog"
-        android:background="@drawable/paper"
+        android:background="@drawable/paper_8"
         android:weightSum="1"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="50dp"
         android:paddingLeft="50dp"
         android:paddingTop="50dp"
         android:paddingRight="50dp"
@@ -63,7 +70,7 @@
         <Button
             android:layout_width="90dp"
             android:layout_height="42dp"
-            android:background="@drawable/ok"
+            android:background="@drawable/ok_8"
             android:id="@+id/btn_fish_dialog_ok"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.08" />
