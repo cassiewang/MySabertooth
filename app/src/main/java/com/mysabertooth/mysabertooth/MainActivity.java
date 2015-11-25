@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public LinearLayout heartsHolder;
     public ArrayList<ImageView> hearts;
 
+    public int itemsBought;
     public OBTBrush toothbrush;
 
     public ToothbrushRunnable toothbrushRunnable;
@@ -64,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     ScheduledFuture future;
 
-    int fish = 5;
-
-    Bitmap heartFilledBitmap;
-    Bitmap heartEmptyBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //Initialize the Typeface
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
         ((TextView) findViewById(R.id.help_dialog_text)).setTypeface(typeface);
-        
+
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (TextView) findViewById(R.id.btn_fish);
@@ -110,19 +107,17 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_self, ShopActivity.class);
-                intent.putExtra("fish", fish);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("fish", Data.fish);
                 startActivity(intent);
             }
         });
 
-        fishButton.setText(fish + "");
+        fishButton.setText(Data.fish + "");
 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
-
-        heartFilledBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_gray_8);
-        heartEmptyBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_red_8);
 
         hearts = new ArrayList<ImageView>();
         hearts.add((ImageView) findViewById(R.id.heart_1));
@@ -174,9 +169,9 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
 
         Intent intent = getIntent();
-        int itemsBought = intent.getIntExtra("items", 0);
+        fishButton.setText(Data.fish+"");
 
-        for (int i = 0; i < itemsBought; i ++) {
+        for (int i = 0; i < Data.items; i ++) {
             ImageView heart = hearts.get(i);
             heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));
         }
@@ -214,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         future.cancel(false);
         executor.shutdown();
 
-        fish = fish + 10;
-        fishButton.setText(fish+"");
+        Data.fish = Data.fish + 10;
+        fishButton.setText(Data.fish+"");
     }
 
     @Override

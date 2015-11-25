@@ -161,24 +161,23 @@ public class CatView extends SurfaceView implements Runnable {
                     0,
                     (int) catXPosition + frameWidth,
                     frameHeight);
+            if (canvas != null) {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                Bitmap toDraw;
 
-            Bitmap toDraw;
+                if (isScared) {
+                    toDraw = scaredCat;
+                } else {
+                    toDraw = bitmapCat;
+                }
 
-            if (isScared) {
-                toDraw = scaredCat;
-                //meow();
-            } else {
-                toDraw = bitmapCat;
-                //purr();
+                canvas.drawBitmap(toDraw,
+                        frameToDraw,
+                        whereToDraw, null);
+
+                ourHolder.unlockCanvasAndPost(canvas);
             }
-
-            canvas.drawBitmap(toDraw,
-                    frameToDraw,
-                    whereToDraw, null);
-
-            ourHolder.unlockCanvasAndPost(canvas);
         }
 
     }
