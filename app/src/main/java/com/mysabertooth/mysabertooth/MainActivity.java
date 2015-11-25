@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +19,15 @@ import com.oralb.sdk.OBTSDK;
 
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     public ImageView fishButton;
     public Button mainHelpDialogOk;
     public LinearLayout mainHelpDialog;
+    public CatView catView;
+    public LinearLayout catHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (ImageView) findViewById(R.id.btn_fish);
+
+        catHolder = (LinearLayout) findViewById(R.id.cat_holder);
+        catView = new CatView(this);
+        catHolder.addView(catView);
 
         mainHelpDialog.setVisibility(View.GONE);
         fishButton.setOnClickListener(new View.OnClickListener() {
