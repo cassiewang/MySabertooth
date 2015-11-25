@@ -29,7 +29,7 @@ public class CatView extends SurfaceView implements Runnable {
     private long timeThisFrame;
     Bitmap bitmapCat;
     boolean isMoving = false;
-    float walkSpeedPerSecond = 1030;
+    float walkSpeedPerSecond = 1024;
     float catXPosition = 0;
     private int frameWidth = 1000;
     private int frameHeight = 1000;
@@ -75,7 +75,7 @@ public class CatView extends SurfaceView implements Runnable {
 
         });
 
-        bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_8);
+        bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_24);
 
 
     }
