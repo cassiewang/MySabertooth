@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,6 +35,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public Button connect;
     public ImageView shopButton;
     private MediaPlayer mediaPlayer;
+    public LinearLayout heartsHolder;
+    public ArrayList<ImageView> hearts;
 
     public OBTBrush toothbrush;
 
@@ -58,7 +64,10 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
     ScheduledFuture future;
 
-    int fish = 0;
+    int fish = 5;
+
+    Bitmap heartFilledBitmap;
+    Bitmap heartEmptyBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,21 +79,21 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         final Context _self = this;
 
         OBTSDK.authorizeSdk(new OBTSdkAuthorizationListener() {
-                @Override
-                public void onSdkAuthorizationSuccess() {
-                    Log.d("mysabertooth", "successs!");
+                                @Override
+                                public void onSdkAuthorizationSuccess() {
+                                    Log.d("mysabertooth", "successs!");
 
-                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
-                        Log.d("checking Bluetooth", "found true");
-                        OBTSDK.startScanning();
-                    } else Log.d("checking Bluetooth", "found false");
-                }
+                                    if (OBTSDK.isBluetoothAvailableAndEnabled()) {
+                                        Log.d("checking Bluetooth", "found true");
+                                        OBTSDK.startScanning();
+                                    } else Log.d("checking Bluetooth", "found false");
+                                }
 
-                @Override
-                public void onSdkAuthorizationFailed(int i) {
-                    Log.d("mysabertooth", "failuree!");
-                }
-            }
+                                @Override
+                                public void onSdkAuthorizationFailed(int i) {
+                                    Log.d("mysabertooth", "failuree!");
+                                }
+                            }
         );
 
         //Initialize the Typeface
@@ -95,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (TextView) findViewById(R.id.btn_fish);
         shopButton = (ImageView) findViewById(R.id.btn_shop);
+        heartsHolder = (LinearLayout) findViewById(R.id.hearts_holder);
 
         shopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,11 +115,21 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
             }
         });
 
-        fishButton.setText(fish+"");
+        fishButton.setText(fish + "");
 
         catHolder = (LinearLayout) findViewById(R.id.cat_holder);
         catView = new CatView(this);
         catHolder.addView(catView);
+
+        heartFilledBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_gray_8);
+        heartEmptyBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart_red_8);
+
+        hearts = new ArrayList<ImageView>();
+        hearts.add((ImageView) findViewById(R.id.heart_1));
+        hearts.add((ImageView) findViewById(R.id.heart_2));
+        hearts.add((ImageView) findViewById(R.id.heart_3));
+        hearts.add((ImageView) findViewById(R.id.heart_4));
+        hearts.add((ImageView) findViewById(R.id.heart_5));
 
         catView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +172,15 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
         //mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+
+        Intent intent = getIntent();
+        int itemsBought = intent.getIntExtra("items", 0);
+
+        for (int i = 0; i < itemsBought; i ++) {
+            ImageView heart = hearts.get(i);
+            heart.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.heart_red_8));
+        }
+
     }
 
     @Override

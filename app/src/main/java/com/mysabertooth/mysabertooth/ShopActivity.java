@@ -15,6 +15,7 @@ public class ShopActivity extends AppCompatActivity {
 
     Intent intent;
     int fish;
+    int items = 0;
 
     Button catnip;
     Button chicken;
@@ -50,6 +51,7 @@ public class ShopActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, MainActivity.class);
                 intent.putExtra("fish", fish);
+                intent.putExtra("items", items);
                 startActivity(intent);
             }
         });
@@ -69,6 +71,9 @@ public class ShopActivity extends AppCompatActivity {
                 toast.show();
             } else {
                 fish = fish - price;
+                items++;
+                Toast toast = Toast.makeText(ShopActivity.this, String.format("Saber loves you!"), Toast.LENGTH_LONG);
+                toast.show();
             }
         }
     }

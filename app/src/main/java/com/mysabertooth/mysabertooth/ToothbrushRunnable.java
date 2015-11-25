@@ -1,5 +1,6 @@
 package com.mysabertooth.mysabertooth;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.oralb.sdk.OBTBrush;
