@@ -12,29 +12,29 @@
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="200dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+
+            <ImageView
                 android:id="@+id/btn_shop"
-                android:layout_weight="1"
-                android:text="Shop" />
-
-
-
-            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/btn_fish"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="27"/>
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/shop"/>
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/btn_fish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/fish"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

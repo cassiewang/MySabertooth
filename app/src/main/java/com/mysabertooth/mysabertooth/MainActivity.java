@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.oralb.sdk.OBTBrush;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Button fishButton;
+    public ImageView fishButton;
     public Button mainHelpDialogOk;
     public LinearLayout mainHelpDialog;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainHelpDialog = (LinearLayout) findViewById(R.id.help_dialog);
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
-        fishButton = (Button) findViewById(R.id.btn_fish);
+        fishButton = (ImageView) findViewById(R.id.btn_fish);
 
         mainHelpDialog.setVisibility(View.GONE);
         fishButton.setOnClickListener(new View.OnClickListener() {
