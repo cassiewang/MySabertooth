@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.TextView;
+import android.graphics.Typeface;
 
 public class ShopActivity extends AppCompatActivity {
 
@@ -45,6 +47,17 @@ public class ShopActivity extends AppCompatActivity {
         chicken.setOnClickListener(new ShopClickListener(3));
         biscuit.setOnClickListener(new ShopClickListener(1));
         mousey.setOnClickListener(new ShopClickListener(5));
+
+        //Initialize the Typeface
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
+        ((TextView) findViewById(R.id.catnip_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.catnip_cost_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.chicken_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.chicken_cost_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.biscuit_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.biscuit_cost_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.mousey_textView)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.mousey_cost_textView)).setTypeface(typeface);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

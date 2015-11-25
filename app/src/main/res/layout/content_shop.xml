@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/shop_catnip"
-                        android:id="@+id/textView" />
+                        android:id="@+id/catnip_textView" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -62,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/shop_cost_2"
-                            android:id="@+id/textView2" />
+                            android:id="@+id/catnip_cost_textView" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/shop_chicken"
-                        android:id="@+id/shop_chicken_label" />
+                        android:id="@+id/chicken_textView" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/shop_cost_3"
-                            android:id="@+id/shop_chicken_cost" />
+                            android:id="@+id/chicken_cost_textView" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/shop_biscuit"
-                        android:id="@+id/shop_biscuit_label" />
+                        android:id="@+id/biscuit_textView" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -160,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/shop_cost_1"
-                            android:id="@+id/shop_biscuit_cost" />
+                            android:id="@+id/biscuit_cost_textView" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/shop_mousey"
-                        android:id="@+id/shop_mousey_label" />
+                        android:id="@+id/mousey_textView" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/shop_cost_5"
-                            android:id="@+id/shop_mousey_cost" />
+                            android:id="@+id/mousey_cost_textView" />
 
                         <ImageView
                             android:layout_width="wrap_content"
