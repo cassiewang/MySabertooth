@@ -17,7 +17,7 @@ import android.view.SurfaceView;
 /**
  * Created by cassiewang on 11/25/15.
  */
-public class CatView extends SurfaceView implements Runnable {
+public class BrushView extends SurfaceView implements Runnable {
 
     volatile boolean playing;
 
@@ -27,10 +27,10 @@ public class CatView extends SurfaceView implements Runnable {
     Paint paint;
     long fps;
     private long timeThisFrame;
-    Bitmap bitmapCat;
+    Bitmap bitmapBrush;
     boolean isMoving = false;
-    float walkSpeedPerSecond = 1030;
-    float catXPosition = 0;
+    float speed = 100;
+    float brushXPosition = 0;
     private int frameWidth = 1000;
     private int frameHeight = 1000;
 
@@ -50,13 +50,13 @@ public class CatView extends SurfaceView implements Runnable {
             frameWidth,
             frameHeight);
 
-    public CatView(Context context) {
+    public BrushView(Context context) {
         super(context);
         setZOrderOnTop(true);
         ourHolder = getHolder();
         ourHolder.setFormat(PixelFormat.TRANSPARENT);
 
-        final CatView _self = this;
+        final BrushView _self = this;
 
         ourHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -67,7 +67,6 @@ public class CatView extends SurfaceView implements Runnable {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-               //resume();
                 draw();
             }
             @Override
@@ -75,8 +74,7 @@ public class CatView extends SurfaceView implements Runnable {
 
         });
 
-        bitmapCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_petting_8);
-
+        bitmapBrush = BitmapFactory.decodeResource(this.getResources(), R.drawable.brush_24);
 
     }
 
@@ -84,8 +82,6 @@ public class CatView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (playing) {
-            System.out.println("Cate" + playing);
-            long startFrameTime = System.currentTimeMillis();
             update();
             draw();
 
@@ -99,14 +95,14 @@ public class CatView extends SurfaceView implements Runnable {
 
     public void update() {
         if (forward) {
-            catXPosition = catXPosition + walkSpeedPerSecond;
+            brushXPosition = brushXPosition + speed;
         } else {
-            catXPosition = catXPosition - walkSpeedPerSecond;
+            brushXPosition = brushXPosition - speed;
         }
 
-        if (catXPosition > (frameCount - 1) * walkSpeedPerSecond) {
+        if (brushXPosition > (frameCount - 1) * speed) {
             forward = false;
-        } else if (catXPosition <= 0) {
+        } else if (brushXPosition <= 0) {
             forward = true;
         }
 
@@ -114,17 +110,18 @@ public class CatView extends SurfaceView implements Runnable {
     }
 
     public void draw() {
+        System.out.println("DRAW "+ brushXPosition+""+ourHolder.getSurface().isValid());
+
         if (ourHolder.getSurface().isValid()) {
             canvas = ourHolder.lockCanvas();
-
-            frameToDraw.set((int) catXPosition,
+            whereToDraw.set((int) brushXPosition,
                     0,
-                    (int) catXPosition + frameWidth,
+                    (int) brushXPosition + frameWidth,
                     frameHeight);
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            canvas.drawBitmap(bitmapCat,
+            canvas.drawBitmap(bitmapBrush,
                     frameToDraw,
                     whereToDraw, null);
 
