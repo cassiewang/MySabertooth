@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mysabertooth.mysabertooth.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/background">
 
 
     <LinearLayout
@@ -14,17 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
-        <ImageButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/btn_shop"
             android:layout_weight="1"
-            android:background="#7d28a4"
-            android:text="Shop"/>
+            android:text="Shop" />
 
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/btn_fish"
             android:layout_gravity="bottom"
             android:layout_weight="1"
