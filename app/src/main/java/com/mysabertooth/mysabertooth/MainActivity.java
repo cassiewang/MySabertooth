@@ -1,5 +1,7 @@
 package com.mysabertooth.mysabertooth;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,8 +27,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-
-
 public class MainActivity extends AppCompatActivity implements OBTBrushListener {
 
     public ImageView fishButton;
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
     public BrushView brushView;
     public LinearLayout catHolder;
     public Button connect;
+    public ImageView shopButton;
 
     public OBTBrush toothbrush;
 
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
 
 
         Log.d("mysabertooth", "authroize!");
+
+        final Context _self = this;
+
         OBTSDK.authorizeSdk(new OBTSdkAuthorizationListener() {
                 @Override
                 public void onSdkAuthorizationSuccess() {
@@ -68,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements OBTBrushListener 
         mainHelpDialogOk = (Button) findViewById(R.id.btn_fish_dialog_ok);
         fishButton = (ImageView) findViewById(R.id.btn_fish);
         connect = (Button) findViewById(R.id.btn_connect);
+        shopButton = (ImageView) findViewById(R.id.btn_shop);
+
+        shopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(_self, ShopActivity.class);
+                startActivity(intent);
+            }
+        });
 
         connect.setOnClickListener(new View.OnClickListener() {
             @Override

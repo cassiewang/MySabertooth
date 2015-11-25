@@ -5,4 +5,13 @@
     <string name="obt_sdk_app_key">8e7a5522-7931-4d46-ac3d-bde165f19e58</string>
     <string name="main_instructions">Wild animals need to trust you. Give them food and goodies to love you more!</string>
     <string name="brush_instructions">Keep brushing to level up your Saber! It\'ll grow!</string>
+    <string name="title_activity_shop">ShopActivity</string>
+    <string name="shop_catnip">catnip</string>
+    <string name="shop_chicken">chicken</string>
+    <string name="shop_biscuit">biscuit</string>
+    <string name="shop_mousey">mousey</string>
+    <string name="buy">buy</string>
+    <string name="shop_cost_1">1x</string>
+    <string name="shop_cost_3">3x</string>
+    <string name="shop_cost_5">5x</string>
 </resources>
